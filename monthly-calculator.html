@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="example.css" rel="stylesheet" type="text/css" />
+    <title>Monthly Cal 2</title>
+
+    <style>
+      .form {
+        float: left;
+        width: 50%;
+        padding: 10px 34px;
+        background: linear-gradient(89.64deg, #35ae79 0.17%, #2dafbd 107.46%);
+        border-radius: 5px;
+        /* padding: 82px 0px; */
+        box-sizing: border-box;
+        margin-bottom: 30px;
+      }
+      .data {
+        float: left;
+        width: 49%;
+        padding: 10px 30px;
+      }
+      .results {
+        width: 100%;
+      }
+      input {
+        border-radius: 5px;
+      }
+      .calculator label,
+      .calculator small {
+        color: black !important;
+      }
+      .calculator {
+        max-width: 80%;
+        margin: 0 auto;
+        padding: 60px;
+      }
+      * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+
+      .donut-chart {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 2rem;
+        border-radius: 100%;
+      }
+      p.center {
+        background: white;
+        position: absolute;
+        text-align: center;
+        font-size: 28px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        margin: auto;
+        border-radius: 50%;
+        line-height: 35px;
+        padding: 27% 0 0;
+      }
+
+      .portion-block {
+        border-radius: 50%;
+        clip: rect(0px, 200px, 200px, 100px);
+        height: 100%;
+        position: absolute;
+        width: 100%;
+      }
+      .circle {
+        border-radius: 50%;
+        clip: rect(0px, 100px, 200px, 0px);
+        height: 100%;
+        position: absolute;
+        width: 100%;
+        font-family: monospace;
+        font-size: 1.5rem;
+      }
+
+      #part1 {
+        transform: rotate(90deg);
+      }
+
+      #part1 .circle {
+        background-color: #4dab7e;
+        /*transform: rotate(76deg);*/
+
+        transform: rotate(90deg);
+      }
+
+      #part2 {
+        transform: rotate(180deg);
+      }
+      #part2 .circle {
+        background-color: #dd7a38;
+        transform: rotate(90deg);
+      }
+      #part3 {
+        transform: rotate(180deg);
+      }
+      #part3 .circle {
+        background-color: #f5c945;
+        transform: rotate(270deg);
+      }
+
+      #part4 {
+        transform: rotate(360deg);
+      }
+
+      #part4 .circle {
+        background-color: #94cde0 !important;
+        /*transform: rotate(76deg);*/
+        transform: rotate(90deg);
+      }
+
+      /*
+override old values
+
+*/
+      #part4 .circle {
+        background-color: #94cde0 !important;
+
+        transform: rotate(169deg);
+      }
+
+      #part2 .circle {
+        background-color: #dd7a38;
+        transform: rotate(215deg);
+      }
+
+      #part1 .circle {
+        background-color: #4dab7e;
+
+        transform: rotate(179deg);
+      }
+      /*
+override old values
+
+*/
+      .results {
+        height: 450px;
+      }
+      /* Animation */
+      @keyframes first {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(90deg);
+        }
+      }
+
+      @keyframes second {
+        from {
+          transform: rotate(90deg);
+        }
+        to {
+          transform: rotate(180deg);
+        }
+      }
+
+      @keyframes third {
+        from {
+          transform: rotate(180deg);
+        }
+        to {
+          transform: rotate(270deg);
+        }
+      }
+      @keyframes fourth {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(90deg);
+        }
+      }
+      .data-inner p {
+        display: flex;
+
+        align-content: space-around;
+        align-items: center;
+        place-content: space-between;
+      }
+      .data-inner p .circle {
+        width: 10px;
+        height: 10px;
+        background-color: black;
+        margin-right: 5px;
+      }
+      .data-inner p strong {
+        margin-left: 20px;
+      }
+      .monthly-form .accrue-field-amount {
+        display: none;
+      }
+      .monthly-form h3 {
+        font-family: "Open Sans" !important;
+        font-weight: 600;
+        font-weight: bolder;
+        font-size: 26px;
+        color: black;
+      }
+      .span-1,
+      .span-2,
+      .span-3,
+      .span-4 {
+        font-weight: bold;
+      }
+
+      @media screen and (max-width: 950px) {
+        .calculator {
+          max-width: 100%;
+          margin: 0 auto;
+          padding: 25px;
+        }
+        .monthly-form {
+          width: 100%;
+          float: none;
+        }
+        .data {
+          width: 100%;
+          float: none;
+        }
+      }
+      table {
+        border-spacing: inherit;
+        padding: 0px;
+      }
+      thead {
+        background: linear-gradient(89.64deg, #dd7a38 0.17%, #2dafbd 107.46%);
+        background: #4dab7e;
+      }
+      .results {
+        padding: 0px;
+      }
+      .results table th {
+        white-space: nowrap;
+        padding: 10px 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <div class="thirty form monthly-form">
+        <h3>Give us Monthly Loan you can pay and get the Loan amount</h3>
+        <div class="accrue-field-amount-monthly">
+          <p>
+            <label>Loan Amount Monthly:</label
+            ><input
+              type="number"
+              class="amount-monthly"
+              value="231.58"
+              name="amount-monthly"
+            />
+          </p>
+        </div>
+        <!--<div class="accrue-field-amount-monthly">
+          <p>
+            <label>Loan Amount Monthly:</label
+            ><input
+              type="button"
+              class="amount-monthly button"
+              value="calculate"
+              name="button"
+              placeholder="calculate"
+              onclick
+            />
+          </p>
+        </div>-->
+      </div>
+      <div class="data">
+        <div class="container">
+          <div class="donut-chart-block">
+            <div class="donut-chart">
+              <div id="part1" class="portion-block">
+                <div class="circle"></div>
+              </div>
+              <div id="part2" class="portion-block">
+                <div class="circle"></div>
+              </div>
+              <div id="part3" class="portion-block">
+                <div class="circle"></div>
+              </div>
+              <div id="part4" class="portion-block">
+                <div class="circle"></div>
+              </div>
+              <p class="center">$9,173</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="data-inner">
+          <p>
+            <span style="background-color: #4dab7e" class="circle"></span
+            ><strong>Amount with Interest:</strong
+            ><span class="span-1">$8,336</span>
+          </p>
+          <p>
+            <span style="background-color: #dd7a38" class="circle"></span
+            ><strong>Total Interest:</strong><span class="span-2">$836.82</span>
+          </p>
+          <p>
+            <span style="background-color: #f5c945" class="circle"></span
+            ><strong>Monthly Payment:</strong
+            ><span class="span-3">$231.58</span>
+          </p>
+          <p>
+            <span style="background-color: #94cde0" class="circle"></span
+            ><strong>Number of Payments:</strong><span class="span-4">36</span>
+          </p>
+        </div>
+      </div>
+      <br />
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="jquery.accrue.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".calculator").accrue({
+          mode: "amortization",
+        });
+
+        //$(".button").click(function () {
+        //$(".calculator").accrue({
+        //mode: "amortization",
+        //});
+        //});
+
+        let TotalAmountWillBe;
+        let monthlyVaulue;
+        let lastRowTotalMonths;
+        let lastRowMonthlyPayment;
+        let lastRowTotalInterest;
+        let lastRowTotalPayment;
+
+        function ReCalculateData() {
+          //Total Price
+          //var princ = 1000;
+          //Year/Time
+
+          var TimeFromInput = $(".term").val();
+          console.log("TimeFromInput", TimeFromInput);
+          var lastChar = TimeFromInput[TimeFromInput.length - 1];
+          var term;
+          if (lastChar === "y") {
+            term = TimeFromInput.slice(0, -1);
+            term = term * 12;
+          } else {
+            term = TimeFromInput.slice(0, -1);
+          }
+          console.log("term", term);
+          //Interest
+
+          var rate = $(".rate").val();
+          rate = rate.slice(0, -1);
+
+          console.log("rate", rate);
+          var intr = parseInt(rate) / 1200;
+
+          // var princ = 1000;
+          // var term = 12;
+          //var intr = 7 / 1200;
+          /*
+              var perMonthPayment =
+                (princ * intr) / (1 - Math.pow(1 / (1 + intr), term));
+              console.log("per month Payment", perMonthPayment);
+            */
+          var perMonthPayment = $(".amount-monthly").val();
+          var AMOUNT =
+            (perMonthPayment * (1 - Math.pow(1 / (1 + intr), term))) / intr;
+
+          console.log("per month Payment", AMOUNT);
+          $(".amount").val(AMOUNT);
+
+          $(".calculator").accrue({
+            mode: "amortization",
+          });
+          $(".span-4").text(term);
+          $(".span-3").text("$" + perMonthPayment);
+
+          lastRowTotalInterest = $(
+            ".accrue-amortization tbody tr:last-child() th:nth-child(3)"
+          ).text();
+          lastRowTotalInterest = parseFloat(
+            lastRowTotalInterest.replace(/\$|,/g, "")
+          );
+          $(".span-2").text("$" + lastRowTotalInterest);
+
+          lastRowTotalPayment = $(
+            ".accrue-amortization tbody tr:last-child() th:nth-child(4)"
+          ).text();
+          lastRowTotalPayment = parseFloat(
+            lastRowTotalPayment.replace(/\$|,/g, "")
+          );
+          var FullFinalAmount = lastRowTotalInterest + lastRowTotalPayment;
+          $(".span-1").text("$" + FullFinalAmount);
+
+          $(".center").text(parseInt(lastRowTotalPayment));
+        }
+
+        $(".amount-monthly").on("change keyup paste", function () {
+          //alert("its working");
+          monthlyVaulue = $(".amount-monthly").val();
+
+          if (
+            monthlyVaulue == "NaN" ||
+            monthlyVaulue == undefined ||
+            monthlyVaulue == 0 ||
+            monthlyVaulue < 0 ||
+            monthlyVaulue == null
+          ) {
+            console.log("inside");
+            $(".amount").val(7500);
+          }
+          ReCalculateData();
+          $(".calculator").accrue({
+            mode: "amortization",
+          });
+        });
+
+        $(".term").on("change keyup paste asa", function () {
+          let terminput = $(".term").val();
+          if (
+            terminput == "NaN" ||
+            terminput == undefined ||
+            terminput == 0 ||
+            terminput == "m" ||
+            terminput == "y"
+          ) {
+            return;
+          }
+
+          ReCalculateData();
+        });
+
+        $(".rate").on("change keyup paste ssssssssss", function () {
+          let rateinput = $(".rate").val();
+          if (
+            rateinput == "NaN" ||
+            rateinput == undefined ||
+            rateinput == 0 ||
+            rateinput == "%"
+          ) {
+            return;
+          }
+          ReCalculateData();
+        });
+
+        // payment = principle * monthly interest/(1 - (1/(1+MonthlyInterest)*Months))
+      });
+    </script>
+  </body>
+</html>
