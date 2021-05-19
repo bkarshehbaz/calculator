@@ -405,7 +405,9 @@ override old values
           var FullFinalAmount = lastRowTotalInterest + lastRowTotalPayment;
           $(".span-1").text("$" + FullFinalAmount);
 
-          $(".center").text(parseInt(lastRowTotalPayment));
+          $(".center").text(
+            parseInt(lastRowTotalPayment) - lastRowTotalInterest
+          );
         }
 
         $(".amount-monthly").on("change keyup paste", function () {
