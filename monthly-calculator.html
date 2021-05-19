@@ -365,7 +365,7 @@ override old values
           rate = rate.slice(0, -1);
 
           console.log("rate", rate);
-          var intr = parseInt(rate) / 1200;
+          var intr = parseFloat(rate) / 1200;
 
           // var princ = 1000;
           // var term = 12;
@@ -406,7 +406,7 @@ override old values
           $(".span-1").text("$" + FullFinalAmount);
 
           $(".center").text(
-            parseInt(lastRowTotalPayment) - lastRowTotalInterest
+            parseFloat(lastRowTotalPayment) - lastRowTotalInterest
           );
         }
 
